@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -22,7 +22,7 @@ public class Student {
     private String gender;
     private int year;
 
-    public Student(Long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
+    public Student(long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
         this.id = id;
         this.name = name;
         this.rollNumber = rollNumber;

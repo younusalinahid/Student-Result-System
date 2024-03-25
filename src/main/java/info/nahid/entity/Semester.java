@@ -18,6 +18,7 @@ public class Semester {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
 //    @JsonManagedReference

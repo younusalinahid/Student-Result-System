@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentWithoutAnyDTO {
 
-    private long id;
+    private Long id;
     private String name;
     private int rollNumber;
     private boolean completedBachelor;

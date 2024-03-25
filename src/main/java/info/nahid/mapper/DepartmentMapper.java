@@ -10,7 +10,7 @@ public class DepartmentMapper {
     private DepartmentMapper() {}
 
     public static Department convertDepartmentRequestWithoutId(DepartmentRequest departmentRequest) {
-        return new Department(0,
+        return new Department(null,
                 departmentRequest.getName()
         );
     }
@@ -20,6 +20,13 @@ public class DepartmentMapper {
                 department.getId(),
                 department.getName()
         );
+    }
+
+    public static Department convertDepartmentRequestWithId(
+            DepartmentRequest departmentRequest, long id) {
+        return new Department(
+                id,
+                departmentRequest.getName());
     }
 
 }

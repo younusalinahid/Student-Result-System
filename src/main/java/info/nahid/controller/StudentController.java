@@ -25,12 +25,12 @@ public class StudentController {
     @Autowired
     DepartmentService departmentService;
 
-//    @PostMapping
-//    public ResponseEntity<ObjectResponse> create(@Valid @RequestBody StudentRequest studentRequest) throws ConstraintsViolationException {
-//        Student student = StudentMapper.convertStudentRequest(studentRequest);
-//        return new ResponseEntity<>(new ObjectResponse(true, Constants.STUDENT_CREATE, StudentMapper
-//                .convertStudentWithoutDto(studentService.create(student))),
-//                HttpStatus.CREATED);
-//    }
+    @PostMapping
+    public ResponseEntity<ObjectResponse> create(@Valid @RequestBody StudentRequest studentRequest) throws ConstraintsViolationException {
+        Student student = StudentMapper.convertStudentRequest(studentRequest);
+        return new ResponseEntity<>(new ObjectResponse(true, Constants.STUDENT_CREATE, StudentMapper
+                .convertStudentWithoutDto(studentService.create(student))),
+                HttpStatus.CREATED);
+    }
 
 }
