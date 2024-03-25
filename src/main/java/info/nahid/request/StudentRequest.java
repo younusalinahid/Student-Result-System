@@ -4,10 +4,6 @@ import info.nahid.utils.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -22,9 +18,7 @@ public class StudentRequest {
     @Positive(message = Constants.ROLL_POSITIVE)
     private int rollNumber;
     private boolean completedBachelor;
-
     private String gender;
-
     private int year;
 
 }

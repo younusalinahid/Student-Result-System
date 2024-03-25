@@ -31,4 +31,16 @@ public class StudentMapper {
         );
     }
 
+    public static Student convertStudentRequestWithId(
+            StudentRequest studentRequest, long id) {
+        return new Student(
+                id,
+                studentRequest.getName(),
+                studentRequest.getRollNumber(),
+                studentRequest.isCompletedBachelor(),
+                studentRequest.getGender(),
+                studentRequest.getYear()
+        );
+    }
+
 }
