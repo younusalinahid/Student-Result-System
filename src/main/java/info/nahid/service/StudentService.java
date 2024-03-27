@@ -1,27 +1,19 @@
 package info.nahid.service;
 
-import info.nahid.entity.Department;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 
-import javax.validation.ConstraintViolationException;
-import java.util.List;
+import java.util.UUID;
 
 public interface StudentService {
 
     Student create(Student student) throws ConstraintsViolationException;
 
-    List<Student> getAllStudents();
-
-    Student getById(Long id);
+    Student getById(UUID id);
 
     Student update(Student student) throws ConstraintsViolationException;
 
-    List<Student> getStudentsByYearAndGender(int year, String gender);
 
-    void deleteById(Long id);
+    void deleteById(UUID id);
 
-    List<Student> getStudentsByGender(String gender);
-
-    List<Student> getStudentsByYear(int year);
 }

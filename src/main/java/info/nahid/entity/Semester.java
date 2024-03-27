@@ -1,10 +1,8 @@
 package info.nahid.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +18,12 @@ public class Semester {
     @Column(unique = true)
     private String name;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Semester(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+//    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL)
 //    private List<Student> students;
+
 }

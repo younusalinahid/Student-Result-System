@@ -22,7 +22,7 @@ public class Student {
     private String gender;
     private int year;
 
-    public Student(long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
+    public Student(Long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
         this.id = id;
         this.name = name;
         this.rollNumber = rollNumber;
@@ -32,13 +32,8 @@ public class Student {
 
     }
 
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "department_id")
-//    private Department department;
-//
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name = "semester_id")
-//    private Semester semester;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 }

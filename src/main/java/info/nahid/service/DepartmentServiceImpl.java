@@ -59,9 +59,10 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
-    public List<Department> getAllDepartment() {
-        return departmentRepository.findAll();
+    public List<Department> getAllDepartments() {
+            return departmentRepository.findAll();
     }
+
 
     @Override
     public void deleteById(Long id) {

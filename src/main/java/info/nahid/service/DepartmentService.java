@@ -16,7 +16,10 @@ public interface DepartmentService {
     Department update(Department department)
             throws ConstraintsViolationException;
 
-    List<Department> getAllDepartment();
+    List<Department> getAllDepartments();
+
 
     void deleteById(Long id);
+
+
 }
