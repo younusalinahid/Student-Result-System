@@ -9,11 +9,11 @@ public interface StudentService {
 
     Student create(Student student) throws ConstraintsViolationException;
 
-    Student getById(UUID id);
+    Student getById(Long id);
 
     Student update(Student student) throws ConstraintsViolationException;
 
 
-    void deleteById(UUID id);
+    void deleteById(Long id);
 
 }

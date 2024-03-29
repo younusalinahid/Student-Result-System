@@ -10,7 +10,7 @@ public class StudentMapper {
 
     }
 
-    public static Student convertStudentRequest(Long departmentId, StudentRequest studentRequest) {
+    public static Student convertStudentRequestWithoutId(Long departmentId, StudentRequest studentRequest) {
         Department department = new Department();
         department.setId(departmentId);
         return new Student(null,
@@ -20,6 +20,20 @@ public class StudentMapper {
                 studentRequest.getGender(),
                 studentRequest.getYear(),
                 department);
+    }
+
+    public static Student convertStudentRequestWithId(Long departmentId, Long studentId, StudentRequest studentRequest) {
+        Department department = new Department();
+        department.setId(departmentId);
+        return new Student(
+                studentId,
+                studentRequest.getName(),
+                studentRequest.getRollNumber(),
+                studentRequest.isCompletedBachelor(),
+                studentRequest.getGender(),
+                studentRequest.getYear(),
+                department
+        );
     }
 
 }

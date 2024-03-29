@@ -68,9 +68,36 @@ public class DepartmentController {
     public ResponseEntity<ObjectResponse> createStudent(@PathVariable("departmentId") Long departmentId,
                                                         @Valid @RequestBody StudentRequest studentRequest)
         throws ConstraintsViolationException {
-        Student student = StudentMapper.convertStudentRequest(departmentId, studentRequest);
+        Student student = StudentMapper.convertStudentRequestWithoutId(departmentId, studentRequest);
         return new ResponseEntity<>(
                 new ObjectResponse(true, Constants.STUDENT_CREATED, studentService.create(student)),
                         HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{departmentId}/students/{studentId}")
+    public ResponseEntity<ObjectResponse> getStudentById(@PathVariable("departmentId") Long departmentId,
+                                                         @PathVariable("studentId") Long studentId) {
+        departmentService.getById(departmentId);
+        Student student = studentService.getById(studentId);
+        return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND,student));
+    }
+
+    @PutMapping("{departmentId}/students/{studentId}")
+    public ResponseEntity<ObjectResponse> updateStudent(@PathVariable("departmentId") Long departmentId,
+                                                        @PathVariable("studentId") Long studentId,
+                                                        @Valid @RequestBody StudentRequest studentRequest)
+        throws ConstraintsViolationException {
+        Student student = StudentMapper.convertStudentRequestWithId(departmentId, studentId, studentRequest);
+        return ResponseEntity.ok(
+                new ObjectResponse(true, Constants.STUDENT_UPDATED, studentService.update(student))
+        );
+    }
+
+    @DeleteMapping("/{departmentId}/students/{studentId}")
+    public ResponseEntity<ApiResponse> deleteById(@PathVariable("departmentId") Long departmentId,
+                                                  @PathVariable("studentId") Long studentId) {
+        departmentService.getById(departmentId);
+        studentService.deleteById(studentId);
+        return ResponseEntity.ok(new ApiResponse(true, Constants.STUDENT_DELETED));
     }
 }
