@@ -20,8 +20,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("departments")
-public class DepartmentController {
+@RequestMapping("/departments")
+public class DepartmentStudentController {
 
     @Autowired
     DepartmentService departmentService;
@@ -54,9 +54,12 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<ObjectResponse> getAllDepartments() {
+        List<Department> departments = departmentService.getAllDepartments();
+        ObjectResponse response = new ObjectResponse(true, "Success", departments);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteById(@PathVariable("id") @Valid long id) {

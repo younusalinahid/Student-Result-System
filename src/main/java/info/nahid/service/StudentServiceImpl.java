@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -64,6 +64,31 @@ public class StudentServiceImpl implements StudentService{
         }
     }
 
+    @Override
+    public List<Student> getStudentsByYearAndGender(int year, String gender) {
+        return studentRepository.findByYearAndGender(year, gender);
+    }
+
+    @Override
+    public List<Student> getStudentsByGender(String gender) {
+        return studentRepository.findByGender(gender);
+    }
+
+    @Override
+    public List<Student> getStudentsByYear(int year) {
+        return studentRepository.findByYear(year);
+    }
+
+    @Override
+    public List<Student> getStudentsByCompleteBachelor(boolean completedBachelor) {
+        return studentRepository.findByCompletedBachelor(completedBachelor);
+    }
+
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
 
     @Override
     public void deleteById(Long id) {

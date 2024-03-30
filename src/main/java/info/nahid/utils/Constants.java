@@ -21,11 +21,11 @@ public class Constants {
     public static final String DEPARTMENT_FOUND = "Department found successfully";
     public static final String DEPARTMENT_DELETED = "Department delete successfully";
 
-    public static final String SEMESTER_CREATE = "Semester create successfully:";
-    public static final String SEMESTER_UPDATE = "Semester update successfully:";
+    public static final String SEMESTER_CREATED = "Semester create successfully:";
+    public static final String SEMESTER_UPDATED = "Semester update successfully:";
     public static final String SEMESTER_NOT_FOUND = "Semester not found for id:";
     public static final String SEMESTER_FOUND = "Semester  found successfully:";
-    public static final String SEMESTER_DELETE = "Semester delete successfully:";
+    public static final String SEMESTER_DELETED = "Semester delete successfully:";
 
     public static final String DATA_VIOLATION = "Error: An unexpected data integrity violation occurred.";
     public static final String ALREADY_EXISTS = "Entity with the given name already exists. Please choose a unique name.";

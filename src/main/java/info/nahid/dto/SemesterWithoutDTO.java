@@ -7,13 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentWithoutAnyDTO {
+public class SemesterWithoutDTO {
 
     private Long id;
     private String name;
-    private int rollNumber;
-    private boolean completedBachelor;
-    private String gender;
-    private int year;
-
 }

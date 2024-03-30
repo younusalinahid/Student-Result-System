@@ -1,23 +1,22 @@
 package info.nahid.service;
 
 import info.nahid.entity.Department;
+import info.nahid.entity.Semester;
 import info.nahid.exception.ConstraintsViolationException;
 
 import java.util.List;
 
+public interface SemesterService {
 
-public interface DepartmentService {
-
-    Department create(Department department)
+    Semester create(Semester semester)
             throws ConstraintsViolationException;
 
-    Department getById(Long id);
+    Semester getById(Long id);
 
-    Department update(Department department)
+    Semester update(Semester semester)
             throws ConstraintsViolationException;
 
-    List<Department> getAllDepartments();
-
+    List<Semester> getAllSemesters();
 
     void deleteById(Long id);
 
