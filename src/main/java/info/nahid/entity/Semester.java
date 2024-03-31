@@ -1,9 +1,12 @@
 package info.nahid.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,12 +21,12 @@ public class Semester {
     @Column(unique = true)
     private String name;
 
-    public Semester(long id, String name) {
+    public Semester(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-//    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL)
-//    private List<Student> students;
-
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 }

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,18 +24,21 @@ public class Student {
     private String gender;
     private int year;
 
-    public Student(Long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
+    public Student(Long id, String name, int rollNumber, boolean completedBachelor, String gender,int year, Department department) {
         this.id = id;
         this.name = name;
         this.rollNumber = rollNumber;
         this.completedBachelor = completedBachelor;
         this.gender = gender;
         this.year = year;
-
+        this.department = department;
     }
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Semester> semesters = new ArrayList<>();
 }

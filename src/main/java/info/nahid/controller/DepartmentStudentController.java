@@ -1,6 +1,7 @@
 package info.nahid.controller;
 
 import info.nahid.entity.Department;
+import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 import info.nahid.mapper.DepartmentMapper;
@@ -72,6 +73,9 @@ public class DepartmentStudentController {
                                                         @Valid @RequestBody StudentRequest studentRequest)
         throws ConstraintsViolationException {
         Student student = StudentMapper.convertStudentRequestWithoutId(departmentId, studentRequest);
+////        Student createdStudent = studentService.create(student);
+////        Semester semester = new Semester();
+//        studentService.saveStudentWithSemesters(createdStudent.getId(), semester);
         return new ResponseEntity<>(
                 new ObjectResponse(true, Constants.STUDENT_CREATED, studentService.create(student)),
                         HttpStatus.CREATED);

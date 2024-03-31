@@ -1,6 +1,7 @@
 package info.nahid.service;
 
 import info.nahid.entity.Department;
+import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 

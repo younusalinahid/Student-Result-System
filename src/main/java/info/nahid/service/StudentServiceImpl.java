@@ -1,7 +1,9 @@
 package info.nahid.service;
 
+import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
+import info.nahid.repository.SemesterRepository;
 import info.nahid.repository.StudentRepository;
 import info.nahid.utils.Constants;
 import org.slf4j.Logger;
@@ -11,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +31,9 @@ public class StudentServiceImpl implements StudentService{
 
     @Autowired
     DepartmentService departmentService;
+
+    @Autowired
+    SemesterRepository semesterRepository;
 
 
     @Override
@@ -83,7 +90,6 @@ public class StudentServiceImpl implements StudentService{
     public List<Student> getStudentsByCompleteBachelor(boolean completedBachelor) {
         return studentRepository.findByCompletedBachelor(completedBachelor);
     }
-
 
     @Override
     public List<Student> getAllStudents() {
