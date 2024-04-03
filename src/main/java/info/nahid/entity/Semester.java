@@ -26,7 +26,7 @@ public class Semester {
         this.name = name;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "semesters")
+    private List<Student> students = new ArrayList<>();
 }

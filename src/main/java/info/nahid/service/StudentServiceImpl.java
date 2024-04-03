@@ -5,6 +5,7 @@ import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 import info.nahid.repository.SemesterRepository;
 import info.nahid.repository.StudentRepository;
+import info.nahid.request.StudentSemesterRequest;
 import info.nahid.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +35,10 @@ public class StudentServiceImpl implements StudentService{
     DepartmentService departmentService;
 
     @Autowired
-    SemesterRepository semesterRepository;
+    StudentService studentService;
+
+    @Autowired
+    SemesterService semesterService;
 
 
     @Override
@@ -94,6 +99,18 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public void saveSemesterInStudent(StudentSemesterRequest request) {
+        Student student = studentService.getById(request.getStudentId());
+        List<Semester> semesters = new ArrayList<>();
+        for (Long semesterId: request.getSemestersId()) {
+            Semester semester = semesterService.getById(semesterId);
+            semesters.add(semester);
+        }
+        student.getSemesters().addAll(semesters);
+        studentRepository.save(student);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package info.nahid.mapper;
 
-import info.nahid.dto.DepartmentWithoutStudentDTO;
+import info.nahid.dto.DepartmentDTO;
 import info.nahid.entity.Department;
 import info.nahid.request.DepartmentRequest;
 
@@ -14,8 +14,8 @@ public class DepartmentMapper {
         );
     }
 
-    public static DepartmentWithoutStudentDTO convertDepartmentWithoutStudentDTO(Department department) {
-        return new DepartmentWithoutStudentDTO(
+    public static DepartmentDTO convertDepartmentWithoutStudentDTO(Department department) {
+        return new DepartmentDTO(
                 department.getId(),
                 department.getName()
         );

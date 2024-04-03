@@ -1,12 +1,17 @@
 package info.nahid.controller;
 
+import info.nahid.dto.StudentInfoDTO;
 import info.nahid.entity.Student;
+import info.nahid.mapper.StudentMapper;
+import info.nahid.request.StudentSemesterRequest;
 import info.nahid.response.ApiResponse;
+import info.nahid.response.ObjectResponse;
 import info.nahid.service.StudentService;
+import info.nahid.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,5 +48,17 @@ public class StudentController {
         return students;
     }
 
+    @PostMapping("/enrollment")
+    public ResponseEntity<ApiResponse> saveSemestersInStudents(@RequestBody StudentSemesterRequest request) {
+        studentService.saveSemesterInStudent(request);
+        return ResponseEntity.ok().body(new ApiResponse(true,"Student successfully enrolled in semesters"));
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<ObjectResponse> getAllStudentsForInfo() {
+        List<Student> students = studentService.getAllStudents();
+        List<StudentInfoDTO> studentsInfo = StudentMapper.convertStudentsWithDepartmentAndSemester(students);
+        return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND, studentsInfo));
+    }
 
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SemesterWithoutDTO {
+public class SemesterDTO {
 
     private Long id;
     private String name;
