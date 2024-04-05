@@ -3,7 +3,6 @@ package info.nahid.service;
 import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
-import info.nahid.repository.SemesterRepository;
 import info.nahid.repository.StudentRepository;
 import info.nahid.request.StudentSemesterRequest;
 import info.nahid.utils.Constants;
@@ -14,11 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,10 +72,6 @@ public class StudentServiceImpl implements StudentService{
         }
     }
 
-    @Override
-    public List<Student> getStudentsByYearAndGender(int year, String gender) {
-        return studentRepository.findByYearAndGender(year, gender);
-    }
 
     @Override
     public List<Student> getStudentsByGender(String gender) {
@@ -94,6 +86,16 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Student> getStudentsByCompleteBachelor(boolean completedBachelor) {
         return studentRepository.findByCompletedBachelor(completedBachelor);
+    }
+
+    @Override
+    public List<Student> getStudentsBySemesterId(Long semesterId) {
+        return studentRepository.findBySemestersId(semesterId);
+    }
+
+    @Override
+    public List<Student> getStudentsByDepartmentId(Long departmentId) {
+        return studentRepository.findByDepartmentId(departmentId);
     }
 
     @Override

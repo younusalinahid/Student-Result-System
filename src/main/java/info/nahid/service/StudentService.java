@@ -17,16 +17,17 @@ public interface StudentService {
 
     Student update(Student student) throws ConstraintsViolationException;
 
-    List<Student> getStudentsByYearAndGender(int year, String gender);
-
     List<Student> getStudentsByGender(String gender);
 
     List<Student> getStudentsByYear(int year);
 
     List<Student> getStudentsByCompleteBachelor(boolean completedBachelor);
 
-    void saveSemesterInStudent(StudentSemesterRequest request);
+    List<Student> getStudentsBySemesterId(Long semesterId);
 
+    List<Student> getStudentsByDepartmentId(Long departmentId);
+
+    void saveSemesterInStudent(StudentSemesterRequest request);
 
     List<Student> getAllStudents();
 

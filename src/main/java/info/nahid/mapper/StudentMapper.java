@@ -41,19 +41,17 @@ public class StudentMapper {
         );
     }
 
-    public static List<StudentInfoDTO> convertStudentsWithDepartmentAndSemester(List<Student> students) {
-        return students.stream()
-                .map(student -> new StudentInfoDTO(
-                        student.getId(),
-                        student.getName(),
-                        student.getRollNumber(),
-                        student.isCompletedBachelor(),
-                        student.getGender(),
-                        student.getYear(),
-                        DepartmentMapper.convertDepartmentWithoutStudentDTO(student.getDepartment()),
-                        SemesterMapper.convertSemesterWithoutSubjectDtoList(student.getSemesters())
-                ))
-                .collect(Collectors.toList());
+    public static StudentInfoDTO convertStudentsWithDepartmentAndSemester(Student student) {
+        return new StudentInfoDTO(
+                student.getId(),
+                student.getName(),
+                student.getRollNumber(),
+                student.isCompletedBachelor(),
+                student.getGender(),
+                student.getYear(),
+                DepartmentMapper.convertDepartmentWithoutStudentDTO(student.getDepartment()),
+                SemesterMapper.convertSemesterWithoutSubjectDtoList(student.getSemesters())
+        );
     }
 
 }

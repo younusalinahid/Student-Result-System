@@ -73,9 +73,6 @@ public class DepartmentStudentController {
                                                         @Valid @RequestBody StudentRequest studentRequest)
         throws ConstraintsViolationException {
         Student student = StudentMapper.convertStudentRequestWithoutId(departmentId, studentRequest);
-////        Student createdStudent = studentService.create(student);
-////        Semester semester = new Semester();
-//        studentService.saveStudentWithSemesters(createdStudent.getId(), semester);
         return new ResponseEntity<>(
                 new ObjectResponse(true, Constants.STUDENT_CREATED, studentService.create(student)),
                         HttpStatus.CREATED);
