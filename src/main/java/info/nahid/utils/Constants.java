@@ -27,6 +27,12 @@ public class Constants {
     public static final String SEMESTER_FOUND = "Semester  found successfully:";
     public static final String SEMESTER_DELETED = "Semester delete successfully:";
 
+    public static final String SUBJECT_CREATED = "Subject create successfully:";
+    public static final String SUBJECT_UPDATED = "Subject update successfully:";
+    public static final String SUBJECT_NOT_FOUND = "Subject not found for id:";
+    public static final String SUBJECT_FOUND = "Subject  found successfully:";
+    public static final String SUBJECT_DELETED = "Subject delete successfully:";
+
     public static final String DATA_VIOLATION = "Error: An unexpected data integrity violation occurred.";
     public static final String ALREADY_EXISTS = "Entity with the given name already exists. Please choose a unique name.";
 

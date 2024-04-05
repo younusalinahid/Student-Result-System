@@ -1,5 +1,6 @@
 package info.nahid.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,9 @@ public class Semester {
     @JsonManagedReference
     @ManyToMany(mappedBy = "semesters")
     private List<Student> students = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "semester", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Subject> subjects;
+
 }
