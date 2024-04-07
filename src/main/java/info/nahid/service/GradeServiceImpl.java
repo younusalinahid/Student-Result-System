@@ -1,8 +1,10 @@
 package info.nahid.service;
 
 
+import info.nahid.entity.Grade;
 import info.nahid.entity.Subject;
 import info.nahid.exception.ConstraintsViolationException;
+import info.nahid.repository.GradeRepository;
 import info.nahid.repository.SubjectRepository;
 import info.nahid.utils.Constants;
 import org.slf4j.Logger;
@@ -19,22 +21,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SubjectServiceImpl implements SubjectService{
+public class GradeServiceImpl implements GradeService{
 
-    private static final Logger logger = LoggerFactory.getLogger(SubjectServiceImpl.class);
-
-    @Autowired
-    SubjectRepository subjectRepository;
+    private static final Logger logger = LoggerFactory.getLogger(GradeServiceImpl.class);
 
     @Autowired
-    SemesterService semesterService;
+    GradeRepository gradeRepository;
+
+    @Autowired
+    SubjectService subjectService;
 
 
     @Override
-    public Subject create(Subject subject) throws ConstraintsViolationException {
+    public Grade create(Grade grade) throws ConstraintsViolationException {
         try {
-            semesterService.getById(subject.getSemester().getId());
-            return subjectRepository.save(subject);
+            subjectService.getById(grade.getSubject().getId());
+            return gradeRepository.save(grade);
         } catch (DataIntegrityViolationException | ConstraintViolationException exception) {
             logger.warn(Constants.DATA_VIOLATION + exception.getMessage());
             throw new ConstraintsViolationException(Constants.ALREADY_EXISTS);
@@ -42,16 +44,16 @@ public class SubjectServiceImpl implements SubjectService{
     }
 
     @Override
-    public List<Subject> getAllSubjects() {
-        return subjectRepository.findAll();
+    public List<Grade> getAllGrades() {
+        return gradeRepository.findAll();
     }
 
 
     @Override
-    public Subject getById(Long id) {
-        Optional<Subject> subject = subjectRepository.findById(id);
-        if (subject.isPresent()) {
-            return subject.get();
+    public Grade getById(Long id) {
+        Optional<Grade> grade = gradeRepository.findById(id);
+        if (grade.isPresent()) {
+            return grade.get();
         } else {
             logger.warn(Constants.SUBJECT_NOT_FOUND + id);
             throw new EntityNotFoundException(Constants.SUBJECT_NOT_FOUND + id);
@@ -59,12 +61,12 @@ public class SubjectServiceImpl implements SubjectService{
     }
 
     @Override
-    public Subject update(Subject subject) throws ConstraintsViolationException {
-        Subject updatedSubject = getById(subject.getId());
-        semesterService.getById(subject.getSemester().getId());
-        BeanUtils.copyProperties(subject, updatedSubject, "id");
+    public Grade update(Grade grade) throws ConstraintsViolationException {
+        Grade updatedGrade = getById(grade.getId());
+        subjectService.getById(grade.getSubject().getId());
+        BeanUtils.copyProperties(grade, updatedGrade, "id");
         try {
-            return subjectRepository.save(updatedSubject);
+            return gradeRepository.save(updatedGrade);
         } catch (DataIntegrityViolationException | ConstraintViolationException exception) {
             logger.warn(Constants.DATA_VIOLATION + exception.getMessage());
             throw new ConstraintsViolationException(Constants.ALREADY_EXISTS);
@@ -75,10 +77,10 @@ public class SubjectServiceImpl implements SubjectService{
     @Override
     public void deleteById(Long id) {
         try {
-            subjectRepository.deleteById(id);
+            gradeRepository.deleteById(id);
         } catch (EmptyResultDataAccessException exception) {
-            logger.warn(Constants.SUBJECT_NOT_FOUND + id);
-            throw new EntityNotFoundException(Constants.SUBJECT_NOT_FOUND + id);
+            logger.warn(Constants.GRADE_NOT_FOUND + id);
+            throw new EntityNotFoundException(Constants.GRADE_NOT_FOUND + id);
         }
     }
 }

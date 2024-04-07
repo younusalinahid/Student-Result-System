@@ -15,14 +15,16 @@ public class SemesterMapper {
 
     public static Semester convertSemesterRequestWithoutId(SemesterRequest semesterRequest) {
         return new Semester(null,
-                semesterRequest.getName()
+                semesterRequest.getName(),
+                semesterRequest.getResult()
         );
     }
 
     public static SemesterDTO convertSemesterWithoutDto(Semester semester) {
         return new SemesterDTO(
                 semester.getId(),
-                semester.getName()
+                semester.getName(),
+                semester.getResult()
         );
     }
 
@@ -30,7 +32,8 @@ public class SemesterMapper {
             SemesterRequest semesterRequest, Long id) {
         return new Semester(
                 id,
-                semesterRequest.getName());
+                semesterRequest.getName(),
+                semesterRequest.getResult());
     }
 
     public static List<SemesterDTO> convertSemesterWithoutSubjectDtoList(List<Semester> semesters) {

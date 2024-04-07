@@ -1,14 +1,18 @@
 package info.nahid.controller;
 
+import info.nahid.entity.Grade;
 import info.nahid.entity.Semester;
 import info.nahid.entity.Subject;
 import info.nahid.exception.ConstraintsViolationException;
+import info.nahid.mapper.GradeMapper;
 import info.nahid.mapper.SemesterMapper;
 import info.nahid.mapper.SubjectMapper;
+import info.nahid.request.GradeRequest;
 import info.nahid.request.SemesterRequest;
 import info.nahid.request.SubjectRequest;
 import info.nahid.response.ApiResponse;
 import info.nahid.response.ObjectResponse;
+import info.nahid.service.GradeService;
 import info.nahid.service.SemesterService;
 import info.nahid.service.SubjectService;
 import info.nahid.utils.Constants;
@@ -29,6 +33,9 @@ public class SemesterSubjectController {
 
     @Autowired
     SubjectService subjectService;
+
+    @Autowired
+    GradeService gradeService;
 
     @PostMapping
     public ResponseEntity<ObjectResponse> create(@Valid @RequestBody SemesterRequest semesterRequest)
@@ -109,6 +116,49 @@ public class SemesterSubjectController {
                                                         @PathVariable("subjectId") Long subjectId) {
         semesterService.getById(semesterId);
         subjectService.deleteById(subjectId);
+        return ResponseEntity.ok(new ApiResponse(true, Constants.SUBJECT_DELETED));
+    }
+
+    @PostMapping("/{semesterId}/subjects/{subjectId}/grades")
+    public ResponseEntity<ObjectResponse> saveGrade(@PathVariable("subjectId") Long subjectId,
+                                                    @Valid @RequestBody GradeRequest gradeRequest)
+            throws ConstraintsViolationException {
+        Grade grade = GradeMapper.convertGradeRequestWithoutId(subjectId, gradeRequest);
+        return new ResponseEntity<>(
+                new ObjectResponse(true, Constants.GRADE_CREATED, gradeService.create(grade)),
+                HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{semesterId}/subjects/{subjectId}/grades/{gradeId}")
+    public ResponseEntity<ObjectResponse> getGradeById(@PathVariable("semesterId") Long semesterId,
+                                                         @PathVariable("subjectId") Long subjectId,
+                                                       @PathVariable("gradeId") Long gradeId) {
+        semesterService.getById(semesterId);
+        subjectService.getById(subjectId);
+        Grade grade = gradeService.getById(gradeId);
+        return ResponseEntity.ok(new ObjectResponse(true, Constants.SUBJECT_FOUND, grade));
+    }
+
+    @PutMapping("/{semesterId}/subjects/{subjectId}/grades/{gradeId}")
+    public ResponseEntity<ObjectResponse> updateGrade(
+            @PathVariable("subjectId") Long subjectId,
+            @PathVariable("gradeId") Long gradeId,
+            @Valid @RequestBody GradeRequest gradeRequest) throws ConstraintsViolationException {
+
+        Grade grade = GradeMapper.convertGradeRequestWithId(subjectId, gradeId, gradeRequest);
+
+        return ResponseEntity.ok(
+                new ObjectResponse(true, Constants.GRADE_UPDATED, gradeService.update(grade))
+        );
+    }
+
+    @DeleteMapping("/{semesterId}/subjects/{subjectId}/grades/{gradeId}")
+    public ResponseEntity<ApiResponse> deletedGrade(@PathVariable("semesterId") Long semesterId,
+                                                      @PathVariable("subjectId") Long subjectId,
+                                                    @PathVariable("gradeId") Long gradeId) {
+        semesterService.getById(semesterId);
+        subjectService.getById(subjectId);
+        gradeService.deleteById(gradeId);
         return ResponseEntity.ok(new ApiResponse(true, Constants.SUBJECT_DELETED));
     }
 

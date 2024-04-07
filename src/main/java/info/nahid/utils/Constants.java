@@ -33,6 +33,12 @@ public class Constants {
     public static final String SUBJECT_FOUND = "Subject  found successfully:";
     public static final String SUBJECT_DELETED = "Subject delete successfully:";
 
+    public static final String GRADE_CREATED = "Grade create successfully:";
+    public static final String GRADE_UPDATED = "Grade update successfully:";
+    public static final String GRADE_NOT_FOUND = "Grade not found for id:";
+    public static final String GRADE_FOUND = "Grade  found successfully:";
+    public static final String GRADE_DELETED = "Grade delete successfully:";
+
     public static final String DATA_VIOLATION = "Error: An unexpected data integrity violation occurred.";
     public static final String ALREADY_EXISTS = "Entity with the given name already exists. Please choose a unique name.";
 

@@ -11,4 +11,5 @@ public class SemesterDTO {
 
     private Long id;
     private String name;
+    private String result;
 }

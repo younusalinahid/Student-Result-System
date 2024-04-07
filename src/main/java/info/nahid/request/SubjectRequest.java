@@ -12,5 +12,5 @@ public class SubjectRequest {
 
     @NotNull(message = Constants.NOT_EMPTY_NAME)
     private String name;
-
+    private int totalMark;
 }

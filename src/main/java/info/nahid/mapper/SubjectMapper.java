@@ -15,6 +15,7 @@ public class SubjectMapper {
         semester.setId(semesterId);
         return new Subject(null,
                 subjectRequest.getName(),
+                subjectRequest.getTotalMark(),
                 semester);
     }
 
@@ -24,6 +25,7 @@ public class SubjectMapper {
         return new Subject(
                 subjectId,
                 subjectRequest.getName(),
+                subjectRequest.getTotalMark(),
                 semester);
     }
 
