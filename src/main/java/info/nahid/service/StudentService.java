@@ -1,13 +1,11 @@
 package info.nahid.service;
 
-import info.nahid.entity.Department;
-import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 import info.nahid.request.StudentSemesterRequest;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 public interface StudentService {
 
@@ -32,5 +30,8 @@ public interface StudentService {
     List<Student> getAllStudents();
 
     void deleteById(Long id);
+
+    Map<String, Object> getStudentResultWithGPA(Long studentId);
+
 
 }

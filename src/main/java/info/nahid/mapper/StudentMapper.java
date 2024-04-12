@@ -1,13 +1,17 @@
 package info.nahid.mapper;
 
-import info.nahid.dto.StudentDto;
-import info.nahid.dto.StudentInfoDTO;
+import info.nahid.dto.*;
 import info.nahid.entity.Department;
+import info.nahid.entity.Result;
+import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
 import info.nahid.request.StudentRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static info.nahid.mapper.SubjectMapper.convertSubjectWithoutId;
 
 public class StudentMapper {
 
@@ -53,5 +57,29 @@ public class StudentMapper {
                 SemesterMapper.convertSemesterWithoutSubjectDtoList(student.getSemesters())
         );
     }
+
+    public static StudentDTO convertStudentDTOWithoutId(Student student) {
+        return new StudentDTO(
+                student.getId(),
+                student.getName(),
+                student.getRollNumber(),
+                student.isCompletedBachelor(),
+                student.getGender(),
+                student.getYear()
+        );
+    }
+
+//    public static StudentResultDTO convertStudentsResultWithSubject(Student student) {
+//        return new StudentResultDTO(
+//                student.getId(),
+//                student.getName(),
+//                student.getRollNumber(),
+//                student.isCompletedBachelor(),
+//                student.getGender(),
+//                student.getYear(),
+//                SemesterMapper.convertSemesterWithSubjectDTOList(student.getSemesters())
+//                //SubjectMapper.convertSubjectRequestWithoutId(student.getSubject)
+//        );
+//    }
 
 }

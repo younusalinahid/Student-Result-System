@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,23 +17,23 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int totalMark;
+    private double GPA;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "semester_id", nullable = false)
     private Semester semester;
 
-
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Grade> grades;
-
-    public Subject(Long id, String name, int totalMark, Semester semester) {
+    public Subject(Long id, String name, Semester semester) {
         this.id = id;
         this.name = name;
-        this.totalMark = totalMark;
         this.semester = semester;
+    }
+
+
+    public Subject(long id, String name, double GPA) {
+        this.id = id;
+        this.name = name;
+        this.GPA = GPA;
     }
 }

@@ -6,14 +6,17 @@ import info.nahid.mapper.StudentMapper;
 import info.nahid.request.StudentSemesterRequest;
 import info.nahid.response.ApiResponse;
 import info.nahid.response.ObjectResponse;
+import info.nahid.service.ResultService;
+import info.nahid.service.SemesterService;
 import info.nahid.service.StudentService;
 import info.nahid.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
+
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/students")
@@ -21,6 +24,12 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    SemesterService semesterService;
+
+    @Autowired
+    ResultService resultService;
 
     @GetMapping
     public ResponseEntity<ObjectResponse> getAllStudents(
@@ -50,18 +59,29 @@ public class StudentController {
     }
 
 
-
     @PostMapping("/enrollment")
-    public ResponseEntity<ApiResponse> saveSemestersInStudents(@RequestBody StudentSemesterRequest request) {
-        studentService.saveSemesterInStudent(request);
-        return ResponseEntity.ok().body(new ApiResponse(true,"Student successfully enrolled in semesters"));
+    public ResponseEntity<ApiResponse> saveSemestersInStudents(@RequestBody StudentSemesterRequest studentSemesterRequest) {
+        studentService.saveSemesterInStudent(studentSemesterRequest);
+        return ResponseEntity.ok().body(new ApiResponse(true,"success"));
     }
+
+
 
     @GetMapping("/{id}/info")
     public ResponseEntity<ObjectResponse> getStudentForInfo(@PathVariable Long id) {
         Student student = studentService.getById(id);
         StudentInfoDTO studentsInfo = StudentMapper.convertStudentsWithDepartmentAndSemester(student);
         return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND, studentsInfo));
+    }
+
+
+    @GetMapping("/{studentId}/result")
+    public ResponseEntity<ObjectResponse> getStudentForResult(@PathVariable Long studentId) {
+        Map<String, Object> result = studentService.getStudentResultWithGPA(studentId);
+        if (result == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND, result));
     }
 
 }

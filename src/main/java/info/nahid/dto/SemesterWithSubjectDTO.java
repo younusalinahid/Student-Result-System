@@ -1,14 +1,19 @@
 package info.nahid.dto;
 
+import info.nahid.entity.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SemesterDTO {
+public class SemesterWithSubjectDTO {
 
     private Long id;
     private String name;
+    private List<Subject> subjects;
 }

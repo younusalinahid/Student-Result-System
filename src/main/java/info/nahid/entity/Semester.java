@@ -22,12 +22,10 @@ public class Semester {
     @Column(unique = true)
     private String name;
 
-    private String result;
 
-    public Semester(Long id, String name, String result) {
+    public Semester(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.result = result;
     }
 
     @JsonManagedReference

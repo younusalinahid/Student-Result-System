@@ -1,6 +1,7 @@
 package info.nahid.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,15 @@ public class Student {
         this.department = department;
     }
 
+    public Student(Long id, String name, int rollNumber, boolean completedBachelor, String gender,int year) {
+        this.id = id;
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.completedBachelor = completedBachelor;
+        this.gender = gender;
+        this.year = year;
+    }
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
@@ -45,4 +55,9 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "semester_id"))
     private List<Semester> semesters = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "student",  fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Result> results;
+
 }

@@ -7,14 +7,17 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class StudentsResultDTO {
+@AllArgsConstructor
+public class StudentResultDTO {
+
     private Long id;
     private String name;
     private int rollNumber;
     private boolean completedBachelor;
     private String gender;
     private int year;
-    private List<SemesterDTO> semester;
+    private List<SemesterWithSubjectDTO> semesterWithSubject;
+    //private SubjectDTO subjectDTO;
+    //private ResultDTO resultDTO;
 }

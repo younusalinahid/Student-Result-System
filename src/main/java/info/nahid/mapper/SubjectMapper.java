@@ -1,8 +1,14 @@
 package info.nahid.mapper;
 
+import info.nahid.dto.SemesterDTO;
+import info.nahid.dto.SubjectDTO;
 import info.nahid.entity.Semester;
 import info.nahid.entity.Subject;
+import info.nahid.request.SemesterRequest;
 import info.nahid.request.SubjectRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubjectMapper {
 
@@ -15,7 +21,6 @@ public class SubjectMapper {
         semester.setId(semesterId);
         return new Subject(null,
                 subjectRequest.getName(),
-                subjectRequest.getTotalMark(),
                 semester);
     }
 
@@ -25,8 +30,17 @@ public class SubjectMapper {
         return new Subject(
                 subjectId,
                 subjectRequest.getName(),
-                subjectRequest.getTotalMark(),
                 semester);
     }
+
+    public static SubjectDTO convertSubjectWithoutId(Subject subject) {
+        return new SubjectDTO(
+                subject.getId(),
+                subject.getName(),
+                subject.getGPA()
+        );
+
+    }
+
 
 }
