@@ -1,12 +1,14 @@
 package info.nahid.controller;
 
 import info.nahid.dto.StudentInfoDTO;
+import info.nahid.dto.StudentResultDTO;
+import info.nahid.repository.ResultRepository;
+import info.nahid.request.StudentSubjectResultRequest;
 import info.nahid.entity.Student;
 import info.nahid.mapper.StudentMapper;
 import info.nahid.request.StudentSemesterRequest;
 import info.nahid.response.ApiResponse;
 import info.nahid.response.ObjectResponse;
-import info.nahid.service.ResultService;
 import info.nahid.service.SemesterService;
 import info.nahid.service.StudentService;
 import info.nahid.utils.Constants;
@@ -30,6 +32,9 @@ public class StudentController {
 
     @Autowired
     ResultService resultService;
+
+    @Autowired
+    ResultRepository resultRepository;
 
     @GetMapping
     public ResponseEntity<ObjectResponse> getAllStudents(
@@ -74,14 +79,16 @@ public class StudentController {
         return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND, studentsInfo));
     }
 
+    @PostMapping("/result")
+    public ResponseEntity<ObjectResponse> saveResultForSubject(@RequestBody StudentSubjectResultRequest request) {
+        Map<String, Object> result = studentService.getStudentResultWithGPA(request);
+        return ResponseEntity.ok().body(new ObjectResponse(true,"Student ", result));
+    }
 
     @GetMapping("/{studentId}/result")
-    public ResponseEntity<ObjectResponse> getStudentForResult(@PathVariable Long studentId) {
-        Map<String, Object> result = studentService.getStudentResultWithGPA(studentId);
-        if (result == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new ObjectResponse(true, Constants.STUDENT_FOUND, result));
+    public ResponseEntity<StudentResultDTO> getStudentResultWithGPA(@PathVariable Long studentId) {
+        StudentResultDTO studentResultDTO = studentService.getStudentResults(studentId);
+        return ResponseEntity.ok().body(studentResultDTO);
     }
 
 }

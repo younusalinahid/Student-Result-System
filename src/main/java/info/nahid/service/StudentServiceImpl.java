@@ -1,12 +1,16 @@
 package info.nahid.service;
 
+import info.nahid.dto.ResultDTO;
+import info.nahid.dto.StudentResultDTO;
 import info.nahid.entity.Result;
 import info.nahid.entity.Semester;
 import info.nahid.entity.Student;
+import info.nahid.entity.Subject;
 import info.nahid.exception.ConstraintsViolationException;
 import info.nahid.repository.ResultRepository;
 import info.nahid.repository.StudentRepository;
 import info.nahid.request.StudentSemesterRequest;
+import info.nahid.request.StudentSubjectResultRequest;
 import info.nahid.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,67 +136,84 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Map<String, Object> getStudentResultWithGPA(Long studentId) {
-        Student student = studentRepository.findById(studentId).orElse(null);
-        if (student == null) {
-            return null;
-        }
+    public Map<String, Object> getStudentResultWithGPA(StudentSubjectResultRequest request) {
+        Student student = studentService.getById(request.getStudentId());
+        Subject subject = subjectService.getById(request.getSubjectId());
+
+        String grade = calculateGrade(request.getMarks());
+
+        Result result = new Result();
+        result.setMarks(request.getMarks());
+        result.setStudent(student);
+        result.setSubject(subject);
+        resultRepository.save(result);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("subjectName", subject.getName());
+        response.put("grade",grade);
+
+        return response;
+    }
+
+    @Override
+    public StudentResultDTO getStudentResults(Long studentId) {
+        Student student = studentService.getById(studentId);
         List<Result> results = resultRepository.findByStudentId(studentId);
-        double totalGradePoints = 0;
-        double totalCredits = 0;
 
+        List<ResultDTO> resultDTOs = new ArrayList<>();
+        double totalGPA = 0.0;
         for (Result result : results) {
-            double credits = result.getSubject().getGPA();
-            totalCredits += credits;
-            totalGradePoints += convertGradeToPoint(result.getGrade()) * credits;
+            String grade = calculateGrade(result.getMarks());
+
+            ResultDTO resultDTO = new ResultDTO();
+            resultDTO.setSubjectName(result.getSubject().getName());
+            resultDTO.setGrade(grade);
+            resultDTOs.add(resultDTO);
+
+            totalGPA += convertGradeToGPA(grade);
+        }
+        if (!results.isEmpty()) {
+            totalGPA /= results.size();
         }
 
-        double totalGPA = totalGradePoints / totalCredits;
+        totalGPA = Double.parseDouble(String.format("%.2f", totalGPA));
 
-        List<Map<String, Object>> resultDetails = new ArrayList<>();
-        for (Result result : results) {
-            Map<String, Object> resultDetail = new HashMap<>();
-            resultDetail.put("subject", result.getSubject().getName());
-            resultDetail.put("subject", result.getSubject().getGPA());
-            resultDetail.put("grade", result.getGrade());
-            resultDetails.add(resultDetail);
-        }
+        StudentResultDTO studentResultDTO = new StudentResultDTO();
+        studentResultDTO.setId(student.getId());
+        studentResultDTO.setName(student.getName());
+        studentResultDTO.setRollNumber(student.getRollNumber());
+        studentResultDTO.setCompletedBachelor(student.isCompletedBachelor());
+        studentResultDTO.setGender(student.getGender());
+        studentResultDTO.setYear(student.getYear());
+        studentResultDTO.setResultDTOS(resultDTOs);
+        studentResultDTO.setTotalGPA(totalGPA);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("studentId", studentId);
-        result.put("name", student.getName());
-        result.put("results", results);
-        result.put("totalGPA", totalGPA);
-
-        return result;
+        return studentResultDTO;
     }
 
-    private double convertGradeToPoint(String grade) {
-        switch (grade) {
-            case "A":
-                return 4.0;
-            case "A-":
-                return 3.5;
-            case "B+":
-                return 3.7;
-            case "B":
-                return 3.0;
-            case "B-":
-                return 2.7;
-            case "C+":
-                return 2.5;
-            case "C":
-                return 2.0;
-            case "C-":
-                return 1.7;
-            case "D+":
-                return 1.3;
-            case "D":
-                return 1.0;
-            case "F":
-                return 0.0;
-            default:
-                throw new IllegalArgumentException("Invalid grade: " + grade);
+    private String calculateGrade(int marks) {
+        if (marks >= 80) {
+            return "A+";
+        } else if (marks >= 70) {
+            return "A";
+        } else if (marks >= 60) {
+            return "B";
+        } else if (marks >= 50) {
+            return "C";
+        } else {
+            return "F";
         }
     }
+
+    private double convertGradeToGPA(String grade) {
+        return switch (grade) {
+            case "A+" -> 4.0;
+            case "A" -> 3.5;
+            case "B" -> 3.0;
+            case "C" -> 2.0;
+            case "F" -> 0.0;
+            default -> 0.0;
+        };
+    }
+
 }

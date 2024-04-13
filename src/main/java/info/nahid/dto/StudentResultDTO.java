@@ -17,7 +17,6 @@ public class StudentResultDTO {
     private boolean completedBachelor;
     private String gender;
     private int year;
-    private List<SemesterWithSubjectDTO> semesterWithSubject;
-    //private SubjectDTO subjectDTO;
-    //private ResultDTO resultDTO;
+    List<ResultDTO> resultDTOS;
+    private double totalGPA;
 }

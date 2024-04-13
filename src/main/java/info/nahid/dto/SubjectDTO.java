@@ -12,5 +12,5 @@ public class SubjectDTO {
 
     private Long id;
     private String name;
-    private double GPA;
+    private String grade;
 }

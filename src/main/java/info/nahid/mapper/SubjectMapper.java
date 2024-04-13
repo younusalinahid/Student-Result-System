@@ -32,15 +32,4 @@ public class SubjectMapper {
                 subjectRequest.getName(),
                 semester);
     }
-
-    public static SubjectDTO convertSubjectWithoutId(Subject subject) {
-        return new SubjectDTO(
-                subject.getId(),
-                subject.getName(),
-                subject.getGPA()
-        );
-
-    }
-
-
 }

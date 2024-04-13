@@ -1,9 +1,10 @@
 package info.nahid.service;
 
+import info.nahid.dto.StudentResultDTO;
 import info.nahid.entity.Student;
 import info.nahid.exception.ConstraintsViolationException;
 import info.nahid.request.StudentSemesterRequest;
-
+import info.nahid.request.StudentSubjectResultRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,8 @@ public interface StudentService {
 
     void deleteById(Long id);
 
-    Map<String, Object> getStudentResultWithGPA(Long studentId);
+    Map<String, Object> getStudentResultWithGPA(StudentSubjectResultRequest request);
 
+    StudentResultDTO getStudentResults(Long studentId);
 
 }

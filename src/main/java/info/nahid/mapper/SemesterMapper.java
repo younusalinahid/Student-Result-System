@@ -1,15 +1,10 @@
 package info.nahid.mapper;
 
 import info.nahid.dto.SemesterDTO;
-import info.nahid.dto.SemesterWithSubjectDTO;
-import info.nahid.dto.SubjectDTO;
 import info.nahid.entity.Semester;
-import info.nahid.entity.Subject;
 import info.nahid.request.SemesterRequest;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SemesterMapper {
 
@@ -45,22 +40,4 @@ public class SemesterMapper {
         }
         return convertedSemesters;
     }
-
-//    public static SemesterWithSubjectDTO convertSemesterWithSubjectDTO(Semester semester) {
-//        return new SemesterWithSubjectDTO(
-//                semester.getId(),
-//                semester.getName(),
-//                semester.getSubjects()
-//        );
-//    }
-//
-//    public static List<SemesterWithSubjectDTO> convertSemesterWithSubjectDTOList(List<Semester> semesters) {
-//        List<SemesterWithSubjectDTO> semesterWithSubject = new ArrayList<>();
-//        for (Semester semester : semesters) {
-//            semesterWithSubject.add(convertSemesterWithSubjectDTO(semester));
-//        }
-//        return semesterWithSubject;
-//    }
-
-
 }

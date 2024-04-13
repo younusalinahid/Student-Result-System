@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.security.auth.Subject;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResultDTO {
 
-    private Long id;
-    private int grade;
+    private String subjectName;
+    private String grade;
 }
