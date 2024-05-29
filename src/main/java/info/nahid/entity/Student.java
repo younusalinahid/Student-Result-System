@@ -56,8 +56,4 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "semester_id"))
     private List<Semester> semesters = new ArrayList<>();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "student",  fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Result> results;
-
 }

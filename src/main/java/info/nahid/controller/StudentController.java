@@ -31,9 +31,6 @@ public class StudentController {
     SemesterService semesterService;
 
     @Autowired
-    ResultService resultService;
-
-    @Autowired
     ResultRepository resultRepository;
 
     @GetMapping
